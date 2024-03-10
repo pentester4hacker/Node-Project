@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Your Dashboard</h2>
+        
+        <% if (user) { %>
+            <div class="profile-info">
+                <h3>Profile Information</h3>
+                <p>Name: <%= user.name %></p>
+                <p>Mobile Number: <%= user.mobileNumber %></p>
+                <p>Location: <%= user.location %></p>
+                <p>Address: <%= user.address %></p>
+                <p>Email: <%= user.email %></p>
+                <p>Summary: <%= user.summary %></p>
+            </div>
+            
+            <div class="profile-form">
+                <h3>Update Profile</h3>
+                <form action="/update-profile" method="post">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="<%= user.name %>">
+                    
+                    <label for="mobileNumber">Mobile Number:</label>
+                    <input type="text" id="mobileNumber" name="mobileNumber" value="<%= user.mobileNumber %>">
+                    
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" value="<%= user.location %>">
+                    
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" value="<%= user.address %>">
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="<%= user.email %>">
+                    
+                    <label for="summary">Summary:</label>
+                    <textarea id="summary" name="summary"><%= user.summary %></textarea>
+                    
+                    <button type="submit">Update Profile</button>
+                </form>
+            </div>
+        <% } else { %>
+            <p>No user data found.</p>
+        <% } %>
+
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
