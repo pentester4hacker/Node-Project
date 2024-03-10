@@ -2,6 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const session = require('express-session');
 
+
 const app = express();
 const port = 3000;
 
@@ -24,10 +25,17 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session middleware
 app.use(session({
+    name: 'mySessionCookie', // Custom cookie name
     secret: 'your-secret-key', // Change this to a secret key for session encryption
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    httpOnly: true,
+     // Set secure option to true for production environment
+     secure: process.env.NODE_ENV === 'production' // Checks if the application is running in production
 }));
+
+
+
 
 // Routes
 app.get('/', (req, res) => {
