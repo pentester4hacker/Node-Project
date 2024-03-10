@@ -26,14 +26,13 @@ app.use(express.urlencoded({ extended: true }));
 // Session middleware
 app.use(session({
     name: 'mySessionCookie', // Custom cookie name
-    secret: 'your-secret-key', // Change this to a secret key for session encryption
+    secret: 'your-secret-key', 
     resave: false,
     saveUninitialized: true,
     httpOnly: true,
      // Set secure option to true for production environment
-     secure: process.env.NODE_ENV === 'production' // Checks if the application is running in production
+     secure: process.env.NODE_ENV === 'production' 
 }));
-
 
 
 
@@ -67,7 +66,7 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-app.post('/signup', (req, res) => {
+app.post('/signup',(req, res) => {
     const { username, password } = req.body;
     // Insert user credentials into the database within a transaction
     db.run('BEGIN TRANSACTION', () => {
@@ -84,15 +83,19 @@ app.post('/signup', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-    // For simplicity, assuming the user is logged in and the user object is available in the session
-    const user = { username: 'test_user' }; // Dummy user for now
+    // Check if user is logged in
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+    // Fetch user details from session
+    const user = req.session.user;
     res.render('dashboard', { user });
 });
-
 app.post('/update-profile', (req, res) => {
     if (!req.session.user) {
         return res.redirect('/');
     }
+    
     const { name, mobileNumber, location, address, email, summary } = req.body;
     const username = 'test_user'; // Dummy user for now
     // Update the user's profile in the database
