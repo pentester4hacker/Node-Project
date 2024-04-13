@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        body {
+            background-color: #000;
+            background-image: url(images/dashboard1.gif);
+            animation: backgroundAnimation 20s infinite alternate;
+            color: #000;
+            position: relative;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .update-profile-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 218, 185, 0.5); 
+        }
+
+        .update-profile-container label {
+            color: #fff;
+        }
+
+        .update-profile-container input[type="text"],
+        .update-profile-container input[type="email"],
+        .update-profile-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.7); 
+        }
+
+        .update-profile-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffdab9; 
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .update-profile-container button:hover {
+            background-color: #ff6347; 
+        }
+    </style>
+</head>
+<body>
+    <div class="update-profile-container">
+        <h2 class="text-center">Update Profile</h2>
+        <form action="/profile" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" name="name" value="<%= user.name %>" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="mobileNumber" class="form-label">Mobile Number:</label>
+                <input type="text" id="mobileNumber" name="mobileNumber" value="<%= user.mobileNumber %>" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" id="location" name="location" value="<%= user.location %>" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <input type="text" id="address" name="address" value="<%= user.address %>" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="summary" class="form-label">Summary:</label>
+                <textarea id="summary" name="summary" class="form-control"><%= user.summary %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

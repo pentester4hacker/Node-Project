@@ -1,0 +1,55 @@
+<!-- delete_profile_confirmation.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Profile Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include necessary meta tags, stylesheets, and other dependencies -->
+</head>
+    <style>
+        /* Add CSS styles for the message box */
+        .delete-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 218, 185, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+    </style>
+<!-- delete_profile_confirmation.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Profile Confirmation</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include necessary meta tags, stylesheets, and other dependencies -->
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="delete-box">
+                    <h1>Delete Profile</h1>
+                    <p><%= message %></p>
+                    <p>Redirecting to login page...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    setTimeout(() => {
+        window.location.href = '/';
+    }, 3000); // Redirect after 3 seconds (adjust as needed)
+</script>
+</body>
+</html>
