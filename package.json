@@ -10,9 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.40.1",
     "bootstrap": "^5.3.3",
+    "cookie-parser": "^1.4.6",
     "csurf": "^1.11.0",
     "express-session": "^1.18.0",
-    "sqlite3": "^5.1.7"
+    "express-validator": "^7.0.1",
+    "node-input-validator": "^4.5.1",
+    "sqlite3": "^5.1.7",
+    "winston": "^3.13.0"
   }
 }

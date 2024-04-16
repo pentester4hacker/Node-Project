@@ -66,15 +66,15 @@
         <form action="/signup" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" id="username" name="username" class="form-control" required>
+                <input type="text" id="username" name="username" class="form-control" pattern="[a-zA-Z0-9@!$%*]+" title="Only alphanumeric characters are allowed" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password" class="form-control" pattern="[a-zA-Z0-9@!$%*]+" title="Only alphanumeric characters are allowed" required>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
-                <input type="text" id="name" name="name" class="form-control" required>
+                <input type="text" id="name" name="name" class="form-control" pattern="[a-zA-Z0-9 ]+" title="Only alphanumeric characters are allowed"  required>
             </div>
             <div class="mb-3">
                 <label for="course" class="form-label">Course:</label>
@@ -86,6 +86,10 @@
                     <option value="Artificial Intelligence">Artificial Intelligence</option>
                 </select>
             </div>
+            <div>
+                <%= csrfToken %>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
     </div>
