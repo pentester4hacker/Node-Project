@@ -53,6 +53,30 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
+            // Create a Winston logger
+            const logger = winston.createLogger({
+                level: 'info', // Set the minimum logging level
+                format: winston.format.combine(
+                    winston.format.timestamp(), // Add timestamp to log entries
+                    winston.format.json() // Log entries in JSON format
+                ),
+                transports: [
+                    new winston.transports.File({ filename: 'logfile.log' }) // Log to a file
+                ]
+            });
+
+            const logEvents = (req, res, next) => {
+                console.log("406",req.path);
+                console.log(req.method);
+                if (req.path === '/login' && req.method === 'POST') {
+                    console.log("408");
+                    logger.info('User logged in', { username: req.body.username, timestamp: new Date() });
+                } else if (req.path === '/logout' && req.method === 'GET') {
+                    logger.info('User logged out', { username: req.session.user.username, timestamp: new Date() });
+                }
+                next();
+            };
+
 // Validation middleware for login form
 const validateLoginForm = [
     // Sanitize username and password to remove special characters
@@ -65,7 +89,7 @@ const validateLoginForm = [
 ];
 
 
-app.post('/login', validateLoginForm, async (req, res) => {
+app.post('/login', validateLoginForm, logEvents, async (req, res) => {
     console.log("hii user pre process",req.body);
 
     const errors = validationResult(req);
@@ -95,6 +119,7 @@ app.post('/login', validateLoginForm, async (req, res) => {
             }
             // Set user session data
             req.session.user = { username };
+
             // Redirect to dashboard upon successful login
             res.redirect('/dashboard');
         });
@@ -183,14 +208,14 @@ app.get('/dashboard', (req, res) => {
 
 
 
-app.get('/dashboard', (req, res) => {
+// app.get('/dashboard', (req, res) => {
     
-    // For simplicity, assuming the user is logged in and the user object is available in the session
-    const user = users[0]; 
-    res.render('dashboard', { user });
-});
+//     // For simplicity, assuming the user is logged in and the user object is available in the session
+//     const user = users[0]; 
+//     res.render('dashboard', { user });
+// });
 
-app.get('/logout', (req, res) => {
+app.get('/logout',logEvents, (req, res) => {
     // Destroy user session to log out
     req.session.destroy((err) => {
         if (err) {
@@ -389,27 +414,9 @@ app.get('/delete_profile', (req, res) => {
 
 
 
-// Create a Winston logger
-const logger = winston.createLogger({
-    level: 'info', // Set the minimum logging level
-    format: winston.format.combine(
-        winston.format.timestamp(), // Add timestamp to log entries
-        winston.format.json() // Log entries in JSON format
-    ),
-    transports: [
-        new winston.transports.File({ filename: 'logfile.log' }) // Log to a file
-    ]
-});
 
-// Middleware to log login and logout events
-const logEvents = (req, res, next) => {
-    if (req.path === '/login' && req.method === 'POST') {
-        logger.info('User logged in', { username: req.body.username, timestamp: new Date() });
-    } else if (req.path === '/logout' && req.method === 'GET') {
-        logger.info('User logged out', { username: req.session.user.username, timestamp: new Date() });
-    }
-    next();
-};
+
+
 
 // Use the logEvents middleware
 app.use(logEvents);
