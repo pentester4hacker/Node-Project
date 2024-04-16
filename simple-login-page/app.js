@@ -66,8 +66,6 @@ app.get('/', (req, res) => {
             });
 
             const logEvents = (req, res, next) => {
-                console.log("406",req.path);
-                console.log(req.method);
                 if (req.path === '/login' && req.method === 'POST') {
                     console.log("408");
                     logger.info('User logged in', { username: req.body.username, timestamp: new Date() });
@@ -82,7 +80,7 @@ const validateLoginForm = [
     // Sanitize username and password to remove special characters
     body('username').trim()
     .notEmpty().withMessage('Username is required')
-    .matches(/^[a-zA-Z0-9_@]+$/).withMessage('Username must contain only alphanumeric characters, underscores, and "@" symbol'),
+    .matches(/^[a-zA-Z0-9_@]+$/).withMessage('Username must contain only alphanumeric characters, underscores, and @ symbol'),
     body('password').trim()
     .notEmpty().withMessage('Password is required')
     .matches(/^[a-zA-Z0-9_@]+$/).withMessage('Password must contain valid characters'),
@@ -90,14 +88,13 @@ const validateLoginForm = [
 
 
 app.post('/login', validateLoginForm, logEvents, async (req, res) => {
-    console.log("hii user pre process",req.body);
+
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // console.log("Hi inside 81", errors);
         return res.status(400).json({ errors: errors.array() });
     }
-
+    // console.log("97",req.body);
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -108,13 +105,11 @@ app.post('/login', validateLoginForm, logEvents, async (req, res) => {
                 return res.status(500).send('Error occurred. Please try again.');
             }
             if (!row) {
-                console.log("Hi inside 88");
                 return res.status(400).send('Incorrect username or password.'); // User not found
             }
             // Verify password using Argon2
             const passwordMatch = await argon2.verify(row.password, password);
             if (!passwordMatch) {
-                console.log("Hi inside password hashing");
                 return res.status(400).send('Incorrect username or password.'); // Incorrect password
             }
             // Set user session data
@@ -444,7 +439,7 @@ const validateSignupForm = [
     // Validate username, password, name, and course
     body('username')
         .notEmpty().withMessage('Username is required')
-        .matches(/^[a-zA-Z0-9_]+$/).withMessage('Username must contain only alphanumeric characters and underscores'),
+        .matches(/^[a-zA-Z0-9@]+$/).withMessage('Username must contain only alphanumeric characters and underscores'),
 
     body('password')
         .notEmpty().withMessage('Password is required')
