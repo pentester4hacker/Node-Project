@@ -9,3 +9,15 @@
 {"level":"info","message":"User logged in","timestamp":"2024-04-16T15:15:22.505Z","username":"jaskdj"}
 {"level":"info","message":"User logged in","timestamp":"2024-04-16T15:16:42.958Z","username":"asda"}
 {"level":"info","message":"User logged in","timestamp":"2024-04-16T15:17:17.736Z","username":"admin"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:30:42.396Z","username":"jai%40123"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:31:47.917Z","username":"smith"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:31:51.671Z","username":"smit"}
+{"level":"info","message":"User logged out","timestamp":"2024-04-23T12:32:03.930Z","username":"smit"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:32:11.770Z","username":"admin"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:32:18.384Z","username":"admin"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:36:32.013Z","username":"admin"}
+{"level":"info","message":"User logged out","timestamp":"2024-04-23T12:36:36.228Z","username":"admin"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:37:48.071Z","username":"admin"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:38:03.872Z","username":"admin"}
+{"level":"info","message":"User logged out","timestamp":"2024-04-23T12:38:10.262Z","username":"admin"}
+{"level":"info","message":"User logged in","timestamp":"2024-04-23T12:41:08.798Z","username":"admin"}

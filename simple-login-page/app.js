@@ -5,7 +5,7 @@ const argon2 = require('argon2');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 const winston = require('winston');
-
+const escapeHtml = require('escape-html');
 
 const app = express();
 const port = 3000;
@@ -40,9 +40,9 @@ app.use(session({
     saveUninitialized: true,
      // Set secure option to true for production environment
      cookie: {
-        secure: false, // Ensure cookies are only sent over HTTPS
+        secure: false, // Make it True cookies are only sent over HTTPS
         httpOnly: true, // Prevent cookies from being accessed via JavaScript
-        maxAge: 24 * 60 * 60 * 1000 // Set session expiry time (e.g., 1 day)
+        maxAge: 24 * 60 * 60 * 1000 //  session expiry time 
     } 
 }));
 
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 
             // Create a Winston logger
             const logger = winston.createLogger({
-                level: 'info', // Set the minimum logging level
+                level: 'info', 
                 format: winston.format.combine(
                     winston.format.timestamp(), // Add timestamp to log entries
                     winston.format.json() // Log entries in JSON format
@@ -94,9 +94,9 @@ app.post('/login', validateLoginForm, logEvents, async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    // console.log("97",req.body);
-    const username = req.body.username;
-    const password = req.body.password;
+    
+    const username = escapeHtml(req.body.username);
+    const password = escapeHtml(req.body.password);
     try {
         // Retrieve hashed password from database
         db.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
@@ -114,6 +114,7 @@ app.post('/login', validateLoginForm, logEvents, async (req, res) => {
             }
             // Set user session data
             req.session.user = { username };
+
 
             // Redirect to dashboard upon successful login
             res.redirect('/dashboard');
@@ -202,13 +203,6 @@ app.get('/dashboard', (req, res) => {
 });
 
 
-
-// app.get('/dashboard', (req, res) => {
-    
-//     // For simplicity, assuming the user is logged in and the user object is available in the session
-//     const user = users[0]; 
-//     res.render('dashboard', { user });
-// });
 
 app.get('/logout',logEvents, (req, res) => {
     // Destroy user session to log out
@@ -405,12 +399,6 @@ app.get('/delete_profile', (req, res) => {
         res.render('thankyou', { message: 'Account has been deleted.' });
     });
 });
-
-
-
-
-
-
 
 
 // Use the logEvents middleware
