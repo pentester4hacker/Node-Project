@@ -1,0 +1,31 @@
+<!-- add_research_topic.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Include necessary meta tags, CSS, and other resources -->
+    <title>Add Research Topic</title>
+    <!-- Include Bootstrap CSS or any other CSS framework you're using -->
+    <link href="path/to/bootstrap.min.css" rel="stylesheet">
+    <!-- Include your custom CSS styles -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Research Topic</h1>
+        <form action="/admin/add-research-topic" method="POST">
+            <div class="mb-3">
+                <label for="researchTopicName" class="form-label">Research Topic Name</label>
+                <input type="text" class="form-control" id="researchTopicName" name="researchTopicName" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseName" class="form-label">Course Name</label>
+                <input type="text" class="form-control" id="courseName" name="courseName" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <!-- Include Bootstrap JS or any other JS scripts -->
+    <script src="path/to/bootstrap.bundle.min.js"></script>
+</body>
+</html>

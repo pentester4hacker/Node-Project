@@ -6,6 +6,7 @@ const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 const winston = require('winston');
 const escapeHtml = require('escape-html');
+const querystring = require('querystring');
 
 const app = express();
 const port = 3000;
@@ -67,7 +68,6 @@ app.get('/', (req, res) => {
 
             const logEvents = (req, res, next) => {
                 if (req.path === '/login' && req.method === 'POST') {
-                    console.log("408");
                     logger.info('User logged in', { username: req.body.username, timestamp: new Date() });
                 } else if (req.path === '/logout' && req.method === 'GET') {
                     logger.info('User logged out', { username: req.session.user.username, timestamp: new Date() });
@@ -77,6 +77,12 @@ app.get('/', (req, res) => {
 
 // Validation middleware for login form
 const validateLoginForm = [
+    (req, res, next) => {
+        // Decoding URI components
+        req.body.username = decodeURIComponent(req.body.username);
+        req.body.password = decodeURIComponent(req.body.password);
+        next();
+    },
     // Sanitize username and password to remove special characters
     body('username').trim()
     .notEmpty().withMessage('Username is required')
@@ -88,13 +94,10 @@ const validateLoginForm = [
 
 
 app.post('/login', validateLoginForm, logEvents, async (req, res) => {
-
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    
     const username = escapeHtml(req.body.username);
     const password = escapeHtml(req.body.password);
     try {
@@ -190,6 +193,7 @@ app.get('/admin/research', authenticateUser, authorizeAdmin, (req, res) => {
         res.render('admin/research', { researchChoices });
     });
 });
+
 
 
 app.get('/dashboard', (req, res) => {
